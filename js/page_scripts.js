@@ -5,6 +5,8 @@ function calcIntent(e) {
   const hashtag_val = document.getElementById("hashtag-field").value;
   const url_val = document.getElementById("url-field").value;
   const via_val = document.getElementById("via-field").value;
+  const reply_val = document.getElementById("reply-field").value;
+  const related_val = document.getElementById("related-field").value;
 
   if (tweet_val.length > 0) {
     finalURL += encodeURIComponent(tweet_val.replace(/[\r\n]+/g, " "))
@@ -24,6 +26,14 @@ function calcIntent(e) {
       finalURL += "&via=" + encodeURIComponent(via_val.replace(/@/g, ""));
     }
 
+    if (reply_val.length > 0) {
+      finalURL += "&in_reply_to=" + encodeURIComponent(reply_val.replace(/@/g, ""));
+    }
+
+    if (related_val.length > 0) {
+      finalURL += "&related=" + encodeURIComponent(related_val.replace(/@/g, ""));
+    }
+
     document.getElementById("intent").innerText = finalURL;
   } else {
     document.getElementById("intent").innerText = "Your tweet is empty";
@@ -38,8 +48,10 @@ function getRemainingChars() {
   const hashtag_len = document.getElementById("hashtag-field").value.length;
   const url_len = document.getElementById("url-field").value.length;
   const via_len = document.getElementById("via-field").value.length;
+  const reply_len = document.getElementById("reply-field").value.length;
+  const related_len = document.getElementById("related-field").value.length;
 
-  var text_remaining = text_max - tweet_len - hashtag_len - url_len - via_len;
+  var text_remaining = text_max - tweet_len - hashtag_len - url_len - via_len - reply_len - related_len;
   if (text_remaining < 0) {
     warning_msg = "- too long!";
     document.getElementById("character_remaining").classList.add("warning");
@@ -51,7 +63,7 @@ function getRemainingChars() {
     "Characters remaining: " + text_remaining + " " + warning_msg;
 }
 
-document.addEventListener("DOMContentLoaded", function(event) {
+document.addEventListener("DOMContentLoaded", function (event) {
   document.querySelector("#character_remaining").innerText =
     "Characters remaining: 280";
 
