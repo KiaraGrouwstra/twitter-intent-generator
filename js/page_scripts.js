@@ -1,3 +1,12 @@
+// pre-populate form fields from hash, e.g. #tweet=hello%20world&hashtag=hello,world
+window.location.hash
+  .substr(1) // remove #
+  .split('&')
+  .map(x => x.split('='))
+  .forEach(([k, v]) => {
+    document.getElementById(`${k}-field`).value = decodeURIComponent(v);
+  });
+
 function calcIntent(e) {
   e.preventDefault();
   var finalURL = "https://twitter.com/intent/tweet?text=";
